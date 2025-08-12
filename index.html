@@ -103,56 +103,54 @@
   {lat: 40.697848, lng: -73.905205, img: "images/tv_eye_2.png", img_no_bg: "images/tv_eye_1.png", title: "TV Eye", text: "A music venue in Brooklyn."}
 ]
 
-            ;
-                
-             locations.forEach(function(loc) {
-                  const img = new Image();
-                        img.onload = function() {
-                    const origWidth = img.naturalWidth;
-                    const origHeight = img.naturalHeight;
-                
-                    const maxWidth = 90;
-                    const maxHeight = 54;
-                
-                    const aspectRatio = origWidth / origHeight;
-                
-                    let scaledWidth = maxWidth;
-                    let scaledHeight = maxWidth / aspectRatio;
-                
-                    if (scaledHeight > maxHeight) {
-                      scaledHeight = maxHeight;
-                      scaledWidth = maxHeight * aspectRatio;
-                    }
-                
-                    const scaledSize = new google.maps.Size(scaledWidth, scaledHeight);
-                
-                    const marker = new google.maps.AdvancedMarkerElement({
-                      position: { lat: loc.lat, lng: loc.lng },
-                      map: map,
-                      title: loc.title,
-                      icon: {
-                        url: loc.img_no_bg,
-                        scaledSize: scaledSize,
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(scaledWidth / 2, scaledHeight / 2)
-                      }
-                    });
-                  };
-                  img.src = loc.img_no_bg;
-                });
+    locations.forEach(function(loc) {
+  const img = new Image();
 
-                marker.addListener('click', function () {
-                    document.getElementById('sandwichImage').src = loc.img;
-                    document.getElementById('sandwichName').textContent = loc.title;
-                    document.getElementById('sandwichText').textContent = loc.text;
-                    ;
+  img.onload = function() {
+    const origWidth = img.naturalWidth;
+    const origHeight = img.naturalHeight;
+
+    const maxWidth = 90;
+    const maxHeight = 54;
+
+    const aspectRatio = origWidth / origHeight;
+
+    let scaledWidth = maxWidth;
+    let scaledHeight = maxWidth / aspectRatio;
+
+    if (scaledHeight > maxHeight) {
+      scaledHeight = maxHeight;
+      scaledWidth = maxHeight * aspectRatio;
+    }
+
+    const scaledSize = new google.maps.Size(scaledWidth, scaledHeight);
+
+    const marker = new google.maps.AdvancedMarkerElement({
+      position: { lat: loc.lat, lng: loc.lng },
+      map: map,
+      title: loc.title,
+      icon: {
+        url: loc.img_no_bg,
+        scaledSize: scaledSize,
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(scaledWidth / 2, scaledHeight / 2)
+      }
+    });
+
+    marker.addListener('click', function () {
+      document.getElementById('sandwichImage').src = loc.img;
+      document.getElementById('sandwichName').textContent = loc.title;
+      document.getElementById('sandwichText').textContent = loc.text;
+      $('#infoModal').modal('show');
+    });
+  };
+
+  // Set src AFTER defining onload
+  img.src = loc.img_no_bg;
+});
 
 
-                    $('#infoModal').modal('show');
-                });
-            });
-        }
-
+     
 
     </script>
 
