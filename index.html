@@ -104,38 +104,41 @@
 ]
 
             ;
-
-            locations.forEach(function (loc) {
-
-                const origWidth = loc.img_no_bg.naturalWidth; // example original width of your image
-                const origHeight = loc.img_no_bg.naturalHeight; // example original height of your image
-
-
-                const maxWidth = 90;  // your desired max width
-                const maxHeight = 54; // your desired max height
                 
-                const aspectRatio = origWidth / origHeight;
+             locations.forEach(function(loc) {
+                  const img = new Image();
+                        img.onload = function() {
+                    const origWidth = img.naturalWidth;
+                    const origHeight = img.naturalHeight;
                 
-                let scaledWidth = maxWidth;
-                let scaledHeight = maxWidth / aspectRatio;
+                    const maxWidth = 90;
+                    const maxHeight = 54;
                 
-                if (scaledHeight > maxHeight) {
-                  scaledHeight = maxHeight;
-                  scaledWidth = maxHeight * aspectRatio;
-                }
+                    const aspectRatio = origWidth / origHeight;
                 
-                const scaledSize = new google.maps.Size(scaledWidth, scaledHeight);
-
-                var marker = new google.maps.AdvancedMarkerElement({
-                    position: { lat: loc.lat, lng: loc.lng },
-                    map: map,
-                    title: loc.title,
-                    icon: {
-                        url: loc.img_no_bg, // Use the sandwich image as the marker icon
-                        scaledSize: scaledSize ,// Adjust marker size <i don't need this if i make the images the right size>
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(25, 25) // Adjust anchor point
+                    let scaledWidth = maxWidth;
+                    let scaledHeight = maxWidth / aspectRatio;
+                
+                    if (scaledHeight > maxHeight) {
+                      scaledHeight = maxHeight;
+                      scaledWidth = maxHeight * aspectRatio;
                     }
+                
+                    const scaledSize = new google.maps.Size(scaledWidth, scaledHeight);
+                
+                    const marker = new google.maps.AdvancedMarkerElement({
+                      position: { lat: loc.lat, lng: loc.lng },
+                      map: map,
+                      title: loc.title,
+                      icon: {
+                        url: loc.img_no_bg,
+                        scaledSize: scaledSize,
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(scaledWidth / 2, scaledHeight / 2)
+                      }
+                    });
+                  };
+                  img.src = loc.img_no_bg;
                 });
 
                 marker.addListener('click', function () {
