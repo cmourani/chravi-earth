@@ -114,7 +114,7 @@
                 var marker = new google.maps.Marker({
                     position: { lat: loc.lat, lng: loc.lng },
                     map: map,
-                    title: loc.name,
+                    title: loc.title,
                     icon: {
                         url: loc.img_no_bg, // Use the sandwich image as the marker icon
                         scaledSize: new google.maps.Size(90, 54), // Adjust marker size <i don't need this if i make the images the right size>
@@ -125,9 +125,9 @@
 
                 marker.addListener('click', function () {
                     document.getElementById('sandwichImage').src = loc.img;
-                    document.getElementById('sandwichName').textContent = loc.sandwich;
+                    document.getElementById('sandwichName').textContent = loc.title;
                     document.getElementById('sandwichText').textContent = loc.text;
-                    `;
+                    ;
 
 
                     $('#infoModal').modal('show');
