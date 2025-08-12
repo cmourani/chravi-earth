@@ -1,4 +1,4 @@
-name: Deploy GitHub Pages
+name: Deploy GitHub Pages (main/root)
 
 on:
   push:
@@ -12,14 +12,16 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup Git
+    # Optional: Build step (uncomment if using a static site generator)
+    # - name: Build site
+    #   run: |
+    #     npm install
+    #     npm run build
+
+    - name: Commit any generated files
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./  # Adjust if your index.html is in the root directory
-        #cname: www.raviearth.com  # Replace with your custom domain
+        git add .
+        git commit -m "Update site [skip ci]" || echo "No changes to commit"
+        git push
