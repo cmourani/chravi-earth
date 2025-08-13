@@ -106,21 +106,6 @@
    
 
    locations.forEach(function (loc) {
-        const origWidth = loc.img.naturalWidth;
-        const origHeight = loc.img.naturalHeight;
-    
-        const maxWidth = 90;
-        const maxHeight = 54;
-    
-        const aspectRatio = origWidth / origHeight;
-    
-        let scaledWidth = maxWidth;
-        let scaledHeight = maxWidth / aspectRatio;
-    
-        if (scaledHeight > maxHeight) {
-          scaledHeight = maxHeight;
-          scaledWidth = maxHeight * aspectRatio;
-         }
        
         var marker = new google.maps.Marker({
             position: { lat: loc.lat, lng: loc.lng },
@@ -128,7 +113,7 @@
             title: loc.title,
             icon: {
                 url: loc.img_no_bg, // Use the sandwich image as the marker icon
-                scaledSize: new google.maps.Size(scaledWidth, scaledHeight), // Adjust marker size <i don't need this if i make the images the right size>
+                scaledSize: new google.maps.Size(90, 54), // Adjust marker size <i don't need this if i make the images the right size>
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(25, 25) // Adjust anchor point
             }
