@@ -61,7 +61,7 @@
                 center: { lat: 40.712776, lng: -74.005974 } // Centered around New York, NY
             });
 
-            
+        };
             
             var locations = 
             [
@@ -125,7 +125,7 @@
 
     const scaledSize = new google.maps.Size(scaledWidth, scaledHeight);
 
-    const marker = new google.maps.AdvancedMarkerElement({
+    const marker = new google.maps.Marker({
       position: { lat: loc.lat, lng: loc.lng },
       map: map,
       title: loc.title,
