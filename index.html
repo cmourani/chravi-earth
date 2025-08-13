@@ -104,28 +104,49 @@
         ];
 
 
+
+        
         locations.forEach(function (loc) {
-                var marker = new google.maps.Marker({
-                    position: { lat: loc.lat, lng: loc.lng },
-                    map: map,
-                    title: loc.title,
-                    icon: {
-                        url: loc.img_no_bg, // Use the sandwich image as the marker icon
-                        scaledSize: new google.maps.Size(90, 54), // Adjust marker size <i don't need this if i make the images the right size>
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(25, 25) // Adjust anchor point
+            const img = new Image();   ////new
+                img.onload = function() {  ////new
+
+                    const origWidth = img.naturalWidth;
+                    const origHeight = img.naturalHeight;
+                    const aspectRatio = origWidth / origHeight;
+            
+                    const maxWidth = 90;
+                    const maxHeight = 54;
+            
+                    let scaledWidth = maxWidth;
+                    let scaledHeight = maxWidth / aspectRatio;
+            
+                    if (scaledHeight > maxHeight) {
+                        scaledHeight = maxHeight;
+                        scaledWidth = maxHeight * aspectRatio;
                     }
-                });
-        
-                marker.addListener('click', function () {
-                    document.getElementById('sandwichImage').src = loc.img;
-                    document.getElementById('sandwichName').textContent = loc.title;
-                    document.getElementById('sandwichText').textContent = loc.text;
-                    ;
-        
-        
-                    $('#infoModal').modal('show');
-                });
+            
+                    var marker = new google.maps.Marker({
+                        position: { lat: loc.lat, lng: loc.lng },
+                        map: map,
+                        title: loc.title,
+                        icon: {
+                            url: loc.img_no_bg, // Use the sandwich image as the marker icon
+                            scaledSize: new google.maps.Size(scaledWidth, scaledHeight), // Adjust marker size <i don't need this if i make the images the right size>
+                            origin: new google.maps.Point(0, 0),
+                            anchor: new google.maps.Point(25, 25) // Adjust anchor point
+                        }
+                    });
+            
+                    marker.addListener('click', function () {
+                        document.getElementById('sandwichImage').src = loc.img;
+                        document.getElementById('sandwichName').textContent = loc.title;
+                        document.getElementById('sandwichText').textContent = loc.text;
+                        ;
+                        $('#infoModal').modal('show');
+                    });
+                };  /////new
+        img.src = loc.img_no_bg;  /////new
+
          });
     }
             
